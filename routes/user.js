@@ -1,21 +1,24 @@
 var express = require('express');
 var router = express.Router();
-const brandController = require('../controllers/brandController')
-//const passportJWT = require('../middleware/passportJWT');
-//const isAdmin = require('../middleware/checkAdmin');
+const userController = require('../controllers/userController');
+const { body } = require('express-validator');
+const passportJWT = require('../middleware/passportJWT');
+const isAdmin = require('../middleware/checkAdmin');
 
-router.get('/',brandController.index);
+/* GET users listing. */
+router.get('/',[passportJWT.isLogIn],[isAdmin.isAdmin], userController.index);
 
-//router.get('/model',brandController.model);
+router.post('/',[
+    body('name').not().isEmpty().withMessage("กรุณากรอกชื่อ-สกุลด้วย"),
+    body('email').not().isEmpty().withMessage("กรุณาใส่อีเมลด้วย").isEmail().withMessage("รูปแบบอีเมลไม่ถูกต้อง"),
+    body('password').not().isEmpty().withMessage("กรุณาใส่รหัสผ่านด้วย").isLength({min:5}).withMessage("รหัสผ่านต้อง5ตัวอักษรขึ้นไป"),
+],userController.register);
 
-//router.get('/',[passportJWT.isLogIn],[isAdmin.isAdmin], brandController.index);
+router.post('/login',[
+    body('email').not().isEmpty().withMessage("กรุณาใส่อีเมลด้วย").isEmail().withMessage("รูปแบบอีเมลไม่ถูกต้อง"),
+    body('password').not().isEmpty().withMessage("กรุณาใส่รหัสผ่านด้วย").isLength({min:5}).withMessage("รหัสผ่านต้อง5ตัวอักษรขึ้นไป"),
+],userController.login);
 
-//router.get('/:id', brandController.Show);
-
-//router.post('/', brandController.insert);
-
-//router.delete('/:id', brandController.remove);
-
-//router.put('/:id', brandController.update);
+router.get('/me',[passportJWT.isLogIn],userController.profile);
 
 module.exports = router;
