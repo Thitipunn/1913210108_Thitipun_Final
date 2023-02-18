@@ -9,6 +9,7 @@ var config = require('./config/index')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var brandRouter = require('./routes/brand');
+var modelRouter = require('./routes/model');
 
 var app = express();
 mongoose.connect(config.MONGODB_URI,{useNewUrlParser: true, useUnifiedTopology: true})
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/brand', brandRouter);
+app.use('/model', modelRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
