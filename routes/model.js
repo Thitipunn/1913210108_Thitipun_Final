@@ -1,19 +1,15 @@
 var express = require('express');
 var router = express.Router();
 const modelController = require('../controllers/modelController')
-//const passportJWT = require('../middleware/passportJWT');
-//const isAdmin = require('../middleware/checkAdmin');
+const passportJWT = require('../middleware/passportJWT');
+const isAdmin = require('../middleware/checkAdmin');
 
 router.get('/',modelController.index);
 
-//router.get('/',[passportJWT.isLogIn],[isAdmin.isAdmin], brandController.index);
+router.post('/',[passportJWT.isLogIn],[isAdmin.isAdmin], modelController.insert);
 
-//router.get('/:id', brandController.Show);
+router.delete('/:id',[passportJWT.isLogIn],[isAdmin.isAdmin], modelController.remove);
 
-router.post('/', modelController.insert);
-
-router.delete('/:id', modelController.remove);
-
-router.put('/:id', modelController.update);
+router.put('/:id',[passportJWT.isLogIn],[isAdmin.isAdmin], modelController.update);
 
 module.exports = router;

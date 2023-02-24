@@ -55,8 +55,8 @@ exports.update = async (req, res, next) => {
         const { model,type,color,price,brand } = req.body;
     
          const models = await Model.findByIdAndUpdate(id,{
-            model : model,
-            type: type,
+            model:model,
+            type:type,
             color:color,
             price:price,
             brand:brand
@@ -68,7 +68,7 @@ exports.update = async (req, res, next) => {
          }
     
         res.status(200).json({
-          message: "Data has been updated",
+          message: "Data has been updated"
         });
     } catch (error) {
       next(error)

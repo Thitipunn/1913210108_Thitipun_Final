@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
 var brandRouter = require('./routes/brand');
 var modelRouter = require('./routes/model');
+var staffRouter = require('./routes/staff');
 
 const errorHandle = require('./middleware/errorHandle');
 
@@ -30,6 +31,7 @@ app.use('/', indexRouter);
 app.use('/user', usersRouter);
 app.use('/brand', brandRouter);
 app.use('/model', modelRouter);
+app.use('/staff', staffRouter);
 
 app.use(errorHandle);
 module.exports = app;
